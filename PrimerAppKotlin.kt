@@ -20,61 +20,30 @@ fun processList(inputList: List<Any?>?): List<ItemData>? {
     if (inputList == null) return null
     
     for (element in inputList){
-        
-        var tipo:String? = ""
-        var inf:String? = ""
         var Pos = i
         i = i+1
+        
         if(element != null){
-            when (element) {
+            val element2 = when (element) {
                 is Int -> {
-                    tipo = "entero"
-                    if (element%10 == 0){
-                        inf = "M10"
-                    }
-                    else if (element%5 == 0){
-                        inf = "M5"
-                    }
-                    else if (element%2 == 0){
-                        inf = "M2"
-                    }
-                    else{
-                        inf = null
+                   when{
+                        element%10==0 ->  ItemData(Pos, element, "entero", "M10")
+                        element%5 == 0 -> ItemData(Pos, element, "entero", "M5")
+                    	element%2 == 0 -> ItemData(Pos, element, "entero", "M2")
+                        else -> ItemData(Pos, element, "entero", null)
                     }
                 }
                 is String ->{
-                  tipo = "cadena"
-                  inf = ("L" + element.length)
-                } 
+                    ItemData(Pos, element, "cadena","L" + element.length)} 
+                
                 is Boolean ->{
-                    tipo = "booleano"
-                    if(element == false){ 
-                        inf = "Falso"
-                    }
-
-                    else if(element == true){
-                        inf ="Verdadero"
-                    }
-                    else{
-                        inf = null
-                    } 
-                }
-                else -> {
-                    tipo = null
-                    inf = null
-                }
+                    ItemData(Pos, element, "booleano",if (element) "Verdadero" else "False")}
+                
+                else -> { 
+                    ItemData(Pos, element,null, null)}
             }
-        val element2 = ItemData(
-            originalPos = Pos,
-            originalValue = element,
-            type = tipo,
-            info = inf 
-            
-        )
         finalList.add(element2)
         }
     }
-    
     return finalList
-
 }
