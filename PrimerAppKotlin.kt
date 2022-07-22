@@ -9,7 +9,7 @@ data class ItemData(
 
 
 fun main() {
-    val result = processList(listOf(25, "Hola", null, false))
+    val result = processList(listOf(20, 25, 2, 7, "hola", "", true, false, null, 2.0))
     println(result)
 }
 
@@ -37,7 +37,7 @@ fun processList(inputList: List<Any?>?): List<ItemData>? {
                     ItemData(Pos, element, "cadena","L" + element.length)} 
                 
                 is Boolean ->{
-                    ItemData(Pos, element, "booleano",if (element) "Verdadero" else "False")}
+                    ItemData(Pos, element, "booleano",if (element) "Verdadero" else "Falso")}
                 
                 else -> { 
                     ItemData(Pos, element,null, null)}
