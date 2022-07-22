@@ -1,4 +1,13 @@
-// // No tocar esta clase ---
+/**
+ * *Copyright (C), 2022-2023, Fabian Juarez Tello (FabianJuarez182)
+    * @author   Fabian Juarez Tello
+    * FileName: DataListItemIdentification
+    @version: I
+    - Creation: 15/07/2022
+    - Last modification: 22/07/2022
+ */
+
+//  No tocar esta clase ---
 data class ItemData(
     var originalPos: Int,
     var originalValue: Any,
@@ -7,12 +16,12 @@ data class ItemData(
 )
 // -----------------------
 
-
+// Main function
 fun main() {
-    val result = processList(listOf(25, "Hola", null, false))
+    val result = processList(listOf(20, 25, 2, 7, "hola", "", true, false, null, 2.0))
     println(result)
 }
-
+// Process list function for use in data splitting
 fun processList(inputList: List<Any?>?): List<ItemData>? {
     var i:Int = 0
     val finalList = ArrayList<ItemData>()
@@ -20,61 +29,32 @@ fun processList(inputList: List<Any?>?): List<ItemData>? {
     if (inputList == null) return null
     
     for (element in inputList){
-        
-        var tipo:String? = ""
-        var inf:String? = ""
         var Pos = i
         i = i+1
+        
         if(element != null){
-            when (element) {
+            val element2 = when (element) {
                 is Int -> {
-                    tipo = "entero"
-                    if (element%10 == 0){
-                        inf = "M10"
-                    }
-                    else if (element%5 == 0){
-                        inf = "M5"
-                    }
-                    else if (element%2 == 0){
-                        inf = "M2"
-                    }
-                    else{
-                        inf = null
+                   when{
+                        element%10==0 ->  ItemData(Pos, element, "entero", "M10") //item creation
+                        element%5 == 0 -> ItemData(Pos, element, "entero", "M5") //item creation
+                    	element%2 == 0 -> ItemData(Pos, element, "entero", "M2") //item creation
+                        else -> ItemData(Pos, element, "entero", null) //item creation
                     }
                 }
                 is String ->{
-                  tipo = "cadena"
-                  inf = ("L" + element.length)
-                } 
+                    ItemData(Pos, element, "cadena","L" + element.length)}  // item creation
+                
                 is Boolean ->{
-                    tipo = "booleano"
-                    if(element == false){ 
-                        inf = "Falso"
-                    }
-
-                    else if(element == true){
-                        inf ="Verdadero"
-                    }
-                    else{
-                        inf = null
-                    } 
-                }
-                else -> {
-                    tipo = null
-                    inf = null
-                }
+                    ItemData(Pos, element, "booleano",if (element) "Verdadero" else "Falso")} // item creation
+                
+                else -> { 
+                    ItemData(Pos, element,null, null)} // item creation
             }
-        val element2 = ItemData(
-            originalPos = Pos,
-            originalValue = element,
-            type = tipo,
-            info = inf 
-            
-        )
+        // Addition of the element in the class
         finalList.add(element2)
         }
     }
-    
+    // The final list will be returned with the data already evaluated.
     return finalList
-
 }
